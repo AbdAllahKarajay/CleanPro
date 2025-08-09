@@ -2,6 +2,7 @@ import 'package:cleaning_services_app/features/services/presentation/service_det
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../logic/service_provider.dart';
+import '../data/models/service.dart';
 import '../../../core/components/components.dart';
 import '../../../core/design/design.dart';
 
@@ -130,13 +131,11 @@ class _ServiceListPageState extends State<ServiceListPage> {
                         itemBuilder: (context, index) {
                           final service = serviceProvider.services[index];
                           return AppCardWithConfig.service(
-                            title: service['name'] ?? 'Service',
-                            description:
-                                service['description'] ??
-                                'Professional cleaning service',
-                            price: '\$${service['base_price']}',
-                            duration: '${service['duration_minutes']} min',
-                            imageUrl: service['image_url'],
+                            title: service.name,
+                            description: service.description,
+                            price: '\$${service.basePrice}',
+                            duration: '${service.durationMinutes} min',
+                            imageUrl: service.imageUrl,
                             onTap: () {
                               Navigator.push(
                                 context,

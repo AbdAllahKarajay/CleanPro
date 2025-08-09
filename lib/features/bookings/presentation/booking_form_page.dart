@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../logic/booking_provider.dart';
+import '../../services/data/models/service.dart';
 import '../../../core/components/components.dart';
 import '../../../core/design/design.dart';
 
@@ -100,14 +101,11 @@ class _BookingFormPageState extends State<BookingFormPage> {
                                     ),
                                     child: Icon(
                                       Icons.cleaning_services,
-                                      color:
-                                          theme.colorScheme.onPrimaryContainer,
+                                      color: theme.colorScheme.onPrimaryContainer,
                                       size: 24,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: DesignPrinciples.spacing4,
-                                  ),
+                                  const SizedBox(width: DesignPrinciples.spacing3),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
@@ -124,7 +122,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
                                               ),
                                         ),
                                         Text(
-                                          service['name'] ?? 'Service',
+                                          service!.name,
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                                 fontWeight:
@@ -136,7 +134,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
                                     ),
                                   ),
                                   Text(
-                                    '\$${service['base_price']}',
+                                    '\$${service.basePrice}',
                                     style: theme.textTheme.titleLarge?.copyWith(
                                       color: theme.colorScheme.primary,
                                       fontWeight:
@@ -147,8 +145,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
                               ),
                               const SizedBox(height: DesignPrinciples.spacing3),
                               Text(
-                                service['description'] ??
-                                    'Professional cleaning service',
+                                service.description,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),

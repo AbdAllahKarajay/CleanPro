@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../bookings/logic/booking_provider.dart';
+import '../data/models/service.dart';
 import '../../../core/components/components.dart';
 import '../../../core/design/design.dart';
 
 class ServiceDetailPage extends StatelessWidget {
-  final Map<String, dynamic> service;
+  final Service service;
   const ServiceDetailPage({super.key, required this.service});
 
   @override
@@ -20,7 +21,7 @@ class ServiceDetailPage extends StatelessWidget {
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         title: Text(
-          service['name'] ?? 'Service Detail',
+          service.name,
           style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: DesignPrinciples.fontWeightSemiBold,
           ),
@@ -43,13 +44,13 @@ class ServiceDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Service Image
-              if (service['image_url'] != null) ...[
+              if (service.imageUrl != null) ...[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(
                     DesignPrinciples.borderRadiusLg,
                   ),
                   child: Image.network(
-                    service['image_url'],
+                    service.imageUrl!,
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -88,7 +89,7 @@ class ServiceDetailPage extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  service['category'] ?? 'Cleaning Service',
+                  service.category ?? 'Cleaning Service',
                   style: theme.textTheme.labelMedium?.copyWith(
                     color: theme.colorScheme.onPrimaryContainer,
                     fontWeight: DesignPrinciples.fontWeightMedium,
@@ -99,8 +100,7 @@ class ServiceDetailPage extends StatelessWidget {
 
               // Service Description
               Text(
-                service['description'] ??
-                    'Professional cleaning service tailored to your needs.',
+                service.description,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: theme.colorScheme.onSurface,
                   height: 1.5,
@@ -131,7 +131,7 @@ class ServiceDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '\$${service['base_price']}',
+                                '\$${service.basePrice}',
                                 style: theme.textTheme.headlineSmall?.copyWith(
                                   color: theme.colorScheme.primary,
                                   fontWeight: DesignPrinciples.fontWeightBold,
@@ -162,7 +162,7 @@ class ServiceDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${service['duration_minutes']} minutes',
+                                '${service.durationMinutes} minutes',
                                 style: theme.textTheme.bodyLarge?.copyWith(
                                   fontWeight: DesignPrinciples.fontWeightMedium,
                                 ),

@@ -1,6 +1,7 @@
 import 'package:cleaning_services_app/features/bookings/logic/booking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../data/models/booking.dart';
 import '../../../core/components/components.dart';
 import '../../../core/design/design.dart';
 
@@ -137,16 +138,12 @@ class _BookingListPageState extends State<BookingListPage> {
                         itemBuilder: (context, index) {
                           final booking = bookingProvider.bookings[index];
                           return AppCardWithConfig.booking(
-                            serviceName: booking['service']['name'],
-                            date: booking['scheduled_at']
-                                .split('T')[0]
-                                .substring(0, 10),
-                            time: booking['scheduled_at']
-                                .split('T')[1]
-                                .substring(0, 5),
-                            status: booking['status'],
-                            address: booking['address'],
-                            price: '\$${booking['service']['base_price']}',
+                            serviceName: booking.service.name,
+                            date: booking.formattedDate,
+                            time: booking.formattedTime,
+                            status: booking.status,
+                            address: booking.address,
+                            price: booking.formattedPrice,
                           );
                         },
                       ),

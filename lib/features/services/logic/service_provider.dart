@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../data/service_api.dart';
+import '../data/models/service.dart';
 
 class ServiceProvider extends ChangeNotifier {
   final ServiceApi _api = ServiceApi();
-  List<Map<String, dynamic>> _services = [];
+  List<Service> _services = [];
   bool _isLoading = false;
 
-  List<Map<String, dynamic>> get services => _services;
+  List<Service> get services => _services;
   bool get isLoading => _isLoading;
 
   Future<void> fetchServices() async {
@@ -14,7 +15,7 @@ class ServiceProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final data = await _api.getServices();
-      _services = List<Map<String, dynamic>>.from(data);
+      _services = data;
     } catch (e) {
       print("Error fetching services: $e");
     }

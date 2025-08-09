@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 import '../data/booking_api.dart';
+import '../data/models/booking.dart';
+import '../../services/data/models/service.dart';
 
 class BookingProvider extends ChangeNotifier {
   final BookingApi _bookingApi = BookingApi();
-  Map<String, dynamic>? selectedService;
+  Service? _selectedService;
 
-  List<Map<String, dynamic>> bookings = [];
+  List<Booking> _bookings = [];
   bool isLoading = false;
 
-  void setSelectedService(Map<String, dynamic> service) {
-    selectedService = service;
+  Service? get selectedService => _selectedService;
+  List<Booking> get bookings => _bookings;
+
+  void setSelectedService(Service service) {
+    _selectedService = service;
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>?> submitBooking({
+  Future<Booking?> submitBooking({
     required String date,
     required String time,
     required String address,
     String? instructions,
   }) async {
-    if (selectedService == null) return null;
+    if (_selectedService == null || _selectedService!.id == null) return null;
     String scheduledAt = '$date $time';
     try {
       final response = await _bookingApi.createBooking(
-        serviceId: selectedService!['id'],
+        serviceId: _selectedService!.id!,
         scheduledAt: scheduledAt,
         address: address,
         instructions: instructions,
@@ -38,8 +43,12 @@ class BookingProvider extends ChangeNotifier {
   Future<void> getBookings() async {
     isLoading = true;
     notifyListeners();
-    final response = await _bookingApi.getBookings();
-    bookings = response;
+    try {
+      final response = await _bookingApi.getBookings();
+      _bookings = response;
+    } catch (e) {
+      print("Error fetching bookings: $e");
+    }
     isLoading = false;
     notifyListeners();
   }
