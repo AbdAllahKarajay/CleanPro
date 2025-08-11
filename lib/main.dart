@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ServiceProvider()),
       ],
       child: MaterialApp(
-        title: 'CleanPro - Professional Cleaning Services',
+        title: 'Beti - Professional Cleaning Services',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         routes: appRoutes,

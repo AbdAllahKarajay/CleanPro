@@ -22,7 +22,7 @@ class Service {
       id: map['id'] as int?,
       name: map['name'] as String? ?? 'Service',
       description: map['description'] as String? ?? 'Professional cleaning service',
-      basePrice: (map['base_price'] as num?)?.toDouble() ?? 0.0,
+      basePrice: double.tryParse(map['base_price'].toString()) ?? 0.0,
       durationMinutes: map['duration_minutes'] as int? ?? 0,
       imageUrl: map['image_url'] as String?,
       category: map['category'] as String?,

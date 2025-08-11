@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:translateX="21.6"
+        android:translateY="21.6">
+        <!-- Water droplet -->
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M54,20 C54,20 44,35 44,50 C44,65 54,80 54,80 C54,80 64,65 64,50 C64,35 54,20 54,20 Z" />
+        
+        <!-- Stars -->
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M70,30 L72,34 L76,34 L73,37 L74,41 L70,39 L66,41 L67,37 L64,34 L68,34 Z" />
+        
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M68,25 L69,27 L71,27 L69.5,28.5 L70,30.5 L68,29.5 L66,30.5 L66.5,28.5 L65,27 L67,27 Z" />
+        
+        <!-- Text "Beti" -->
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M35,60 L35,70 L37,70 L37,62 L40,70 L42,70 L45,62 L45,70 L47,70 L47,60 L44,60 L42,67 L40,67 L38,60 Z" />
+        
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M49,60 L49,70 L51,70 L51,60 Z" />
+        
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M53,60 L53,70 L55,70 L55,68 L57,70 L59,70 L57,68 L57,60 Z" />
+        
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M61,60 L61,70 L63,70 L63,60 Z" />
+        
+        <path
+            android:fillColor="#2196F3"
+            android:pathData="M65,60 L65,70 L67,70 L67,60 L65,60 M65,68 L67,68" />
+    </group>
+</vector>

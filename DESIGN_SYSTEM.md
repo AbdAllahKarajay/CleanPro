@@ -1,11 +1,11 @@
-# CleanPro Design System
+# Beti Design System
 
-A comprehensive design system for the CleanPro cleaning services app, built with Flutter and following Material Design 3 principles.
+A comprehensive design system for the Beti cleaning services app, built with Flutter and following Material Design 3 principles.
 
 ## 🎨 Design Principles
 
 ### Brand Values
-- **CleanPro** - Professional Cleaning Services
+- **Beti** - Professional Cleaning Services
 - **Clean and Professional** - Minimal design with clear hierarchy and ample white space
 - **Trustworthy** - Use of professional colors and clear communication
 - **Accessible** - High contrast ratios and readable typography
@@ -279,4 +279,4 @@ AppButton(
 
 ---
 
-*This design system is maintained by the CleanPro development team and should be updated as the app evolves.* 
+*This design system is maintained by the Beti development team and should be updated as the app evolves.* 

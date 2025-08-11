@@ -1,6 +1,7 @@
 import 'package:cleaning_services_app/features/bookings/logic/booking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/components/navigation_bar.dart';
 import '../data/models/booking.dart';
 import '../../../core/components/components.dart';
 import '../../../core/design/design.dart';
@@ -43,25 +44,7 @@ class _BookingListPageState extends State<BookingListPage> {
           // ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: theme.colorScheme.surface,
-        elevation: 8,
-        selectedIndex: 1,
-        onDestinationSelected: (int index) {
-          if (index == 0) {
-            Navigator.pushReplacementNamed(context, '/services');
-          } else if (index == 1) {
-            Navigator.pushReplacementNamed(context, '/bookings');
-          } else if (index == 2) {
-            Navigator.pushReplacementNamed(context, '/profile');
-          }
-        },
-        destinations: [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.book), label: 'Bookings'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+      bottomNavigationBar: AppNavigationBar(selectedIndex: 1),
       body:
           bookingProvider.isLoading
               ? Center(

@@ -19,6 +19,10 @@ class _BookingFormPageState extends State<BookingFormPage> {
   final addressController = TextEditingController();
   final instructionsController = TextEditingController();
 
+  // Location coordinates
+  double? _selectedLatitude;
+  double? _selectedLongitude;
+
   @override
   Widget build(BuildContext context) {
     final service = Provider.of<BookingProvider>(context).selectedService;
@@ -101,11 +105,14 @@ class _BookingFormPageState extends State<BookingFormPage> {
                                     ),
                                     child: Icon(
                                       Icons.cleaning_services,
-                                      color: theme.colorScheme.onPrimaryContainer,
+                                      color:
+                                          theme.colorScheme.onPrimaryContainer,
                                       size: 24,
                                     ),
                                   ),
-                                  const SizedBox(width: DesignPrinciples.spacing3),
+                                  const SizedBox(
+                                    width: DesignPrinciples.spacing3,
+                                  ),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
@@ -222,6 +229,27 @@ class _BookingFormPageState extends State<BookingFormPage> {
                         ),
                         const SizedBox(height: DesignPrinciples.spacing4),
 
+                        // Location Field
+                        Text(
+                          'Location',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: DesignPrinciples.fontWeightSemiBold,
+                          ),
+                        ),
+                        const SizedBox(height: DesignPrinciples.spacing3),
+
+                        LocationPickerMap(
+                          height: 250,
+                          onLocationSelected: (latitude, longitude, address) {
+                            setState(() {
+                              _selectedLatitude = latitude;
+                              _selectedLongitude = longitude;
+                              // addressController.text = address;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: DesignPrinciples.spacing4),
+
                         // Address Field
                         AppTextFieldWithConfig.address(
                           controller: addressController,
@@ -250,12 +278,28 @@ class _BookingFormPageState extends State<BookingFormPage> {
                           text: 'Confirm Booking',
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
+                              // Validate that location is selected
+                              if (_selectedLatitude == null ||
+                                  _selectedLongitude == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Text(
+                                      "Please select a location on the map",
+                                    ),
+                                    backgroundColor: DesignPrinciples.errorRed,
+                                  ),
+                                );
+                                return;
+                              }
+
                               final result = await bookingProvider
                                   .submitBooking(
                                     date: dateController.text,
                                     time: timeController.text,
                                     address: addressController.text,
                                     instructions: instructionsController.text,
+                                    latitude: _selectedLatitude!,
+                                    longitude: _selectedLongitude!,
                                   );
                               if (result != null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -265,6 +309,7 @@ class _BookingFormPageState extends State<BookingFormPage> {
                                         DesignPrinciples.successGreen,
                                   ),
                                 );
+                                Navigator.pop(context);
                                 Navigator.pop(context);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(

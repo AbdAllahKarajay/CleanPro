@@ -12,6 +12,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/profile': (context) => const ProfilePage(),
   '/services': (context) => const ServiceListPage(),
   '/bookings': (context) => const BookingListPage(),
-  // detail page must be pushed manually using MaterialPageRoute with args
   '/book': (context) => const BookingFormPage(),
 };

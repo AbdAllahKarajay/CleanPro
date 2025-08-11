@@ -37,156 +37,166 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: Form(
-          key: _formKey,
+        child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(DesignPrinciples.spacing6),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: DesignPrinciples.spacing8),
-
-                // Logo/Brand Section
-                Column(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(DesignPrinciples.spacing6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(
-                          DesignPrinciples.borderRadiusLg,
+                    const SizedBox(height: DesignPrinciples.spacing8),
+
+                    // Logo/Brand Section
+                    Column(
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primary,
+                            borderRadius: BorderRadius.circular(
+                              DesignPrinciples.borderRadiusLg,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.cleaning_services,
+                            color: DesignPrinciples.neutralWhite,
+                            size: 40,
+                          ),
                         ),
-                      ),
-                      child: const Icon(
-                        Icons.cleaning_services,
-                        color: DesignPrinciples.neutralWhite,
-                        size: 40,
-                      ),
+                        const SizedBox(height: DesignPrinciples.spacing4),
+                        Text(
+                          DesignPrinciples.brandName,
+                          style: theme.textTheme.headlineLarge?.copyWith(
+                            color: theme.colorScheme.primary,
+                            fontWeight: DesignPrinciples.fontWeightBold,
+                          ),
+                        ),
+                        const SizedBox(height: DesignPrinciples.spacing2),
+                        Text(
+                          DesignPrinciples.brandTagline,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
+
+                    const SizedBox(height: DesignPrinciples.spacing12),
+
+                    // Login Form
+                    AppTextFieldWithConfig.phone(
+                      controller: phoneController,
+                      isRequired: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your phone number';
+                        }
+                        if (value.length < 10) {
+                          return 'Please enter a valid phone number';
+                        }
+                        return null;
+                      },
+                    ),
+
                     const SizedBox(height: DesignPrinciples.spacing4),
-                    Text(
-                      DesignPrinciples.brandName,
-                      style: theme.textTheme.headlineLarge?.copyWith(
-                        color: theme.colorScheme.primary,
-                        fontWeight: DesignPrinciples.fontWeightBold,
-                      ),
+
+                    AppTextFieldWithConfig.password(
+                      controller: passwordController,
+                      isRequired: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
                     ),
-                    const SizedBox(height: DesignPrinciples.spacing2),
+
+                    const SizedBox(height: DesignPrinciples.spacing6),
+
+                    // Login Button
+                    AppButton(
+                      text: 'Sign In',
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final success = await authProvider.login(
+                            phoneController.text,
+                            passwordController.text,
+                          );
+                          if (success) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              '/services',
+                            );
+                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                success ? 'Login successful' : 'Login failed',
+                              ),
+                              backgroundColor:
+                                  success
+                                      ? DesignPrinciples.successGreen
+                                      : DesignPrinciples.errorRed,
+                            ),
+                          );
+                        }
+                      },
+                      isLoading: authProvider.isLoading,
+                      icon: Icons.login,
+                    ),
+
+                    const SizedBox(height: DesignPrinciples.spacing8),
+
+                    // Additional Options
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account? ",
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/register');
+                            },
+                            child: Text(
+                              'Sign Up',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.primary,
+                                fontWeight: DesignPrinciples.fontWeightSemiBold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: DesignPrinciples.spacing8),
+
+                    // Footer
                     Text(
-                      DesignPrinciples.brandTagline,
-                      style: theme.textTheme.bodyMedium?.copyWith(
+                      'Professional cleaning services at your fingertips',
+                      style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-
-                const SizedBox(height: DesignPrinciples.spacing12),
-
-                // Login Form
-                AppTextFieldWithConfig.phone(
-                  controller: phoneController,
-                  isRequired: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
-                    }
-                    if (value.length < 10) {
-                      return 'Please enter a valid phone number';
-                    }
-                    return null;
-                  },
-                ),
-
-                const SizedBox(height: DesignPrinciples.spacing4),
-
-                AppTextFieldWithConfig.password(
-                  controller: passwordController,
-                  isRequired: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
-                ),
-
-                const SizedBox(height: DesignPrinciples.spacing6),
-
-                // Login Button
-                AppButton(
-                  text: 'Sign In',
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      final success = await authProvider.login(
-                        phoneController.text,
-                        passwordController.text,
-                      );
-                      if (success) {
-                        Navigator.pushReplacementNamed(context, '/services');
-                      }
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            success ? 'Login successful' : 'Login failed',
-                          ),
-                          backgroundColor:
-                              success
-                                  ? DesignPrinciples.successGreen
-                                  : DesignPrinciples.errorRed,
-                        ),
-                      );
-                    }
-                  },
-                  isLoading: authProvider.isLoading,
-                  icon: Icons.login,
-                ),
-
-                const SizedBox(height: DesignPrinciples.spacing8),
-
-                // Additional Options
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/register');
-                        },
-                        child: Text(
-                          'Sign Up',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.primary,
-                            fontWeight: DesignPrinciples.fontWeightSemiBold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const Spacer(),
-
-                // Footer
-                Text(
-                  'Professional cleaning services at your fingertips',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+              ),
             ),
           ),
         ),

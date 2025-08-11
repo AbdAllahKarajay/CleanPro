@@ -18,11 +18,13 @@ class BookingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Booking?> submitBooking({
+  Future submitBooking({
     required String date,
     required String time,
     required String address,
     String? instructions,
+    required double latitude,
+    required double longitude,
   }) async {
     if (_selectedService == null || _selectedService!.id == null) return null;
     String scheduledAt = '$date $time';
@@ -32,10 +34,13 @@ class BookingProvider extends ChangeNotifier {
         scheduledAt: scheduledAt,
         address: address,
         instructions: instructions,
+        latitude: latitude,
+        longitude: longitude,
       );
       return response;
-    } catch (e) {
+    } catch (e, s) {
       print("Booking failed: $e");
+      print("Booking failed stack trace: $s");
       return null;
     }
   }

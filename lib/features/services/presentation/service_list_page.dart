@@ -1,6 +1,7 @@
 import 'package:cleaning_services_app/features/services/presentation/service_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/components/navigation_bar.dart';
 import '../logic/service_provider.dart';
 import '../data/models/service.dart';
 import '../../../core/components/components.dart';
@@ -45,24 +46,7 @@ class _ServiceListPageState extends State<ServiceListPage> {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: theme.colorScheme.surface,
-        elevation: 8,
-        onDestinationSelected: (int index) {
-          if (index == 0) {
-            Navigator.pushReplacementNamed(context, '/services');
-          } else if (index == 1) {
-            Navigator.pushReplacementNamed(context, '/bookings');
-          } else if (index == 2) {
-            Navigator.pushReplacementNamed(context, '/profile');
-          }
-        },
-        destinations: [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.book), label: 'Bookings'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+      bottomNavigationBar: AppNavigationBar(selectedIndex: 0),
       body:
           serviceProvider.isLoading
               ? Center(

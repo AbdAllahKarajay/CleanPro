@@ -1,3 +1,4 @@
+import 'package:cleaning_services_app/core/components/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../logic/auth_provider.dart';
@@ -32,25 +33,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: theme.colorScheme.surface,
-        elevation: 8,
-        selectedIndex: 2,
-        onDestinationSelected: (int index) {
-          if (index == 0) {
-            Navigator.pushReplacementNamed(context, '/services');
-          } else if (index == 1) {
-            Navigator.pushReplacementNamed(context, '/bookings');
-          } else if (index == 2) {
-            Navigator.pushReplacementNamed(context, '/profile');
-          }
-        },
-        destinations: [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.book), label: 'Bookings'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+      bottomNavigationBar: AppNavigationBar(selectedIndex: 2),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(DesignPrinciples.spacing6),
@@ -79,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   const SizedBox(height: DesignPrinciples.spacing1),
                   Text(
-                    'Welcome to CleanPro',
+                    'Welcome to Beti',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -110,7 +93,7 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: DesignPrinciples.spacing4),
             AppCardWithConfig.info(
-              title: 'About CleanPro',
+              title: 'About Beti',
               content: 'Learn more about our cleaning services',
               icon: Icons.info_outline,
               onTap: () {
@@ -122,11 +105,11 @@ class ProfilePage extends StatelessWidget {
             // Logout Button
             AppButton(
               text: 'Sign Out',
+              color: DesignPrinciples.errorRed,
               onPressed: () async {
                 await authProvider.logout();
                 Navigator.pushReplacementNamed(context, '/login');
               },
-              variant: AppButtonVariant.danger,
               icon: Icons.logout,
             ),
           ],
